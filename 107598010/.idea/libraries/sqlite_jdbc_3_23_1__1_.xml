@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="sqlite-jdbc-3.23.1 (1)">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/sqllite/sqlite-jdbc-3.23.1 (1).jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
