@@ -12,13 +12,10 @@ import java.io.FileNotFoundException;
 import static org.junit.Assert.assertTrue;
 
 public class SqlLiteDatabaseTest {
-    Course course;
+    protected Course course = new Course();
     Database sql;
-    @Before
-    public void setup()
-    {
-        sql = new SqlLiteDatabase();
-        course = new Course();
+
+    public void createTestCourse() {
         course.setCourseDescription("很棒");
         course.setCourseAttentionNote("要修過ooad");
         course.setCourseNote("加油");
@@ -26,41 +23,54 @@ public class SqlLiteDatabaseTest {
         course.setCoursePrice(100);
         course.setCourseName("SA");
     }
+
+    @Before
+    public void setup() {
+        sql = new SqlLiteDatabase();
+        createTestCourse();
+    }
+
     @Test
-    public void  testConnect()
-    {
+    public void testConnect() {
         sql.connectDB();
     }
+
     @Test
-    public void testRead()
-    {
+    public void testRead() {
         sql.connectDB();
         sql.read();
     }
+
     @Test
-    public void  testInsert() throws FileNotFoundException {
+    public void testInsert()  {
 
         sql.connectDB();
         sql.insert(course);
         sql.read();
+        sql.delete(course.getCourseName());
     }
+
     @Test
-    public void  testDelete() throws FileNotFoundException, ClassNotFoundException, SQLException, UnsupportedEncodingException {
+    public void testDelete()  {
 
         sql.connectDB();
-        sql.createTable( );
+        sql.createTable();
         sql.insert(course);
         sql.delete("SA");
         sql.read();
     }
+
     @Test
-    public void testSelect()
-    {
+    public void testSelect() throws FileNotFoundException {
         sql.connectDB();
+        sql.insert(course);
+        sql.read();
+        //sql.delete("SA");
         System.out.println(sql.select("SA").getCourseName());
     }
+
     @Test
-    public void  testUpdate() throws FileNotFoundException, ClassNotFoundException, SQLException, UnsupportedEncodingException {
+    public void testUpdate() throws FileNotFoundException, ClassNotFoundException, SQLException, UnsupportedEncodingException {
 
         sql.connectDB();
         sql.read();
@@ -74,9 +84,6 @@ public class SqlLiteDatabaseTest {
         sql.update(course);
         sql.read();
     }
-
-
-
 
 
 }

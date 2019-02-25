@@ -28,52 +28,51 @@ import java.util.ResourceBundle;
  * Created by tanzhenyu on 2017/6/14.
  */
 public class MainController implements Initializable {
-   private CourseFactory cf =new CourseFactory();
-   private CheckBox select;
-   private CourseServices courseServices = new CourseServices();
-    private cn.tzy.MainApp mainApp;
-    /*private final ObservableList<Course> data
-            =  FXCollections.observableArrayList(cf.createCourseObject("軟體工程","很棒","學生",100,"要修過OOAD","加油"),
-            cf.createCourseObject("sa","很難","學生",100,"要修過OOAD","加油"));
-*/
-    private  ObservableList<Course> data
-            =  FXCollections.observableArrayList(courseServices.allCourse());
+    private CourseFactory cf = new CourseFactory();
+    private CheckBox select;
+    private CourseServices courseServices = new CourseServices();
+
+    private ObservableList<Course> data
+            = FXCollections.observableArrayList(courseServices.allCourse());
     @FXML
     private TableView<Course> courseTable;
     @FXML
-    private TableColumn<Course,String> courseName;
+    private TableColumn<Course, String> courseName;
     @FXML
-    private TableColumn<Course,String> courseDescription;
+    private TableColumn<Course, String> courseDescription;
     @FXML
-    private TableColumn<Course,String> courseTarget;
+    private TableColumn<Course, String> courseTarget;
     @FXML
-    private TableColumn<Course,Integer> coursePrice;
+    private TableColumn<Course, Integer> coursePrice;
     @FXML
-    private TableColumn<Course,String> courseAttentionNote;
+    private TableColumn<Course, String> courseAttentionNote;
     @FXML
-    private TableColumn<Course,String> courseNote;
+    private TableColumn<Course, String> courseNote;
 
     @FXML
     private void handleAddPerson() throws IOException {
-        Course ctemp =new Course();
         showPersonEditDialog(" ");
     }
+
     @FXML
     private void handleUpdatePerson() throws IOException {
         int selectedIndex = courseTable.getSelectionModel().getSelectedIndex();
-        showPersonEditDialog(courseTable.getItems().get(selectedIndex).getCourseName());
+        if (selectedIndex != -1)
+            showPersonEditDialog(courseTable.getItems().get(selectedIndex).getCourseName());
     }
 
     @FXML
     private void handleDeletePerson() {
         int selectedIndex = courseTable.getSelectionModel().getSelectedIndex();
-        courseServices.deleteCourse(courseTable.getItems().get(selectedIndex).getCourseName());
-        courseTable.getItems().remove(selectedIndex);
+        if (selectedIndex != -1) {
+            courseServices.deleteCourse(courseTable.getItems().get(selectedIndex).getCourseName());
+            courseTable.getItems().remove(selectedIndex);
+        }
 
     }
-    public void updateUI()
-    {
-        data=  FXCollections.observableArrayList(courseServices.allCourse());
+
+    public void updateUI() {
+        data = FXCollections.observableArrayList(courseServices.allCourse());
         courseName.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         courseDescription.setCellValueFactory(new PropertyValueFactory<>("courseDescription"));
         courseTarget.setCellValueFactory(new PropertyValueFactory<>("courseTarget"));
@@ -82,26 +81,24 @@ public class MainController implements Initializable {
         courseNote.setCellValueFactory(new PropertyValueFactory<>("courseNote"));
         courseTable.setItems(data);
     }
+
     @Override
-    public void initialize(URL location, ResourceBundle resources)
-    {
+    public void initialize(URL location, ResourceBundle resources) {
 
         updateUI();
     }
-
 
     @FXML
     public boolean showPersonEditDialog(String ctemp) throws IOException {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("PersonEditDialog.fxml"));
-           // FileInputStream fileInputStream = new FileInputStream("controller/");
-            Parent root = (Parent)loader.load();
-            PersonEditDialogController controller =loader.getController();
+            // FileInputStream fileInputStream = new FileInputStream("controller/");
+            Parent root = (Parent) loader.load();
+            PersonEditDialogController controller = loader.getController();
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             Scene scene = new Scene(root);
-
             dialogStage.setTitle("Edit Person");
             dialogStage.setScene(scene);
             dialogStage.initModality(Modality.WINDOW_MODAL);

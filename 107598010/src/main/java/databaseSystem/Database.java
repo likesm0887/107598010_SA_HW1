@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface Database {
 
-     void connectDB();
+    void connectDB();
 
-     void insert(Course course) ;
+    void insert(Course course);
 
-     void createTable( );
+    void createTable();
 
     List<Course> read();
 
-     void delete(String courseName);
+    void delete(String courseName);
 
-     void update(Course course);
+    void update(Course course);
 
     Course select(String courseName);
 }

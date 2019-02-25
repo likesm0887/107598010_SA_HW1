@@ -9,69 +9,61 @@ public class Course {
     int coursePrice;
     String courseAttentionNote;
     String courseNote;
-    public Course ()
-    {
+
+    public Course() {
 
     }
 
 
-    public void setCourseName(String courseName)
-    {
-        this.courseName=courseName;
-    }
-    public String getCourseName()
-    {
-        return  this.courseName=courseName;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
-
-    public void setCourseDescription(String courseDescription)
-    {
-        this.courseDescription=courseDescription;
-    }
-    public String getCourseDescription()
-    {
-        return  this.courseDescription=courseDescription;
+    public String getCourseName() {
+        return this.courseName = courseName;
     }
 
 
-    public void setCourseTarget(String CourseTarget)
-    {
-        this.courseTarget=CourseTarget;
-    }
-    public String getCourseTarget()
-    {
-        return  this.courseTarget=courseTarget;
+    public void setCourseDescription(String courseDescription) {
+        this.courseDescription = courseDescription;
     }
 
-
-    public void setCourseAttentionNote(String courseAttentionNote)
-    {
-        this.courseAttentionNote =courseAttentionNote;
-    }
-    public String getCourseAttentionNote()
-    {
-        return  this.courseAttentionNote=courseAttentionNote;
+    public String getCourseDescription() {
+        return this.courseDescription = courseDescription;
     }
 
 
-    public void setCoursePrice(int coursePrice)
-    {
-        this.coursePrice =coursePrice;
+    public void setCourseTarget(String CourseTarget) {
+        this.courseTarget = CourseTarget;
     }
 
-    public int getCoursePrice()
-    {
+    public String getCourseTarget() {
+        return this.courseTarget = courseTarget;
+    }
+
+
+    public void setCourseAttentionNote(String courseAttentionNote) {
+        this.courseAttentionNote = courseAttentionNote;
+    }
+
+    public String getCourseAttentionNote() {
+        return this.courseAttentionNote = courseAttentionNote;
+    }
+
+
+    public void setCoursePrice(int coursePrice) {
+        this.coursePrice = coursePrice;
+    }
+
+    public int getCoursePrice() {
         return this.coursePrice;
     }
 
-    public void  setCourseNote(String courseNote)
-    {
-        this.courseNote =courseNote;
+    public void setCourseNote(String courseNote) {
+        this.courseNote = courseNote;
     }
 
-    public String  getCourseNote()
-    {
+    public String getCourseNote() {
         return this.courseNote;
     }
 }

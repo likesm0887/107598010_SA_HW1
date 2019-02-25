@@ -38,27 +38,27 @@ public class PersonEditDialogController {
     private TextField courseNote;
 
 
-
     private Stage dialogStage;
     private Course course;
     private boolean okClicked = false;
-    private CourseServices courseServices =new CourseServices();
+    private CourseServices courseServices = new CourseServices();
+
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
-    public static boolean isNumeric (String str){
+    public static boolean isNumeric(String str) {
         Pattern pattern = Pattern.compile("[0-9]*");
         return pattern.matcher(str).matches();
     }
+
     @FXML
     private void initialize() {
-        coursePrice.setOnKeyReleased(new EventHandler<KeyEvent> () {
+        coursePrice.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 System.out.println(coursePrice.getText());
-                if (!isNumeric(coursePrice.getText()))
-                {
+                if (!isNumeric(coursePrice.getText())) {
                     final Alert alert2 = new Alert(Alert.AlertType.INFORMATION); // 實體化Alert對話框物件，並直接在建構子設定對話框的訊息類型
                     alert2.setTitle("輸入錯誤"); //設定對話框視窗的標題列文字
                     alert2.setHeaderText("請輸入數字"); //設定對話框視窗裡的標頭文字。若設為空字串，則表示無標頭
@@ -67,7 +67,7 @@ public class PersonEditDialogController {
                 }
             }
 
-     });
+        });
     }
 
     /**
@@ -83,9 +83,8 @@ public class PersonEditDialogController {
     public void setPerson(String courseName) {
 
         this.courseName.setText(courseName);
-        Course courseTemp =courseServices.selectCourse(courseName);
-        if(courseTemp!=null)
-        {
+        Course courseTemp = courseServices.selectCourse(courseName);
+        if (courseTemp != null) {
             this.courseName.setDisable(true);
             courseDescription.setText(courseTemp.getCourseDescription());
             courseTarget.setText(courseTemp.getCourseTarget());
@@ -110,21 +109,19 @@ public class PersonEditDialogController {
      */
     @FXML
     private void handleOk() {
-        course =new Course();
+        course = new Course();
 
         System.out.println(courseName.getText());
-            course.setCourseName(courseName.getText());
-            course.setCourseDescription(courseDescription.getText());
-            course.setCourseTarget(courseTarget.getText());
-            course.setCoursePrice(Integer.parseInt(coursePrice.getText().toString()));
-            course.setCourseAttentionNote(courseAttentionNote.getText());
-            course.setCourseNote(courseNote.getText());
-            okClicked = true;
-        if(courseServices.selectCourse(courseName.getText())!=null)
-        {
+        course.setCourseName(courseName.getText());
+        course.setCourseDescription(courseDescription.getText());
+        course.setCourseTarget(courseTarget.getText());
+        course.setCoursePrice(Integer.parseInt(coursePrice.getText().toString()));
+        course.setCourseAttentionNote(courseAttentionNote.getText());
+        course.setCourseNote(courseNote.getText());
+        okClicked = true;
+        if (courseServices.selectCourse(courseName.getText()) != null) {
             courseServices.updateCourse(course);
-        }else
-        {
+        } else {
             courseServices.addCourse(course);
         }
         dialogStage.close();

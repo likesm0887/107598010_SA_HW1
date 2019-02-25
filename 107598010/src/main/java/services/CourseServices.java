@@ -9,7 +9,12 @@ import java.util.List;
 
 public class CourseServices
 {
-       private  Database database = new SqlLiteDatabase();
+    private  Database database = new SqlLiteDatabase();
+        public void setDatabase(Database database)
+        {
+             this.database = database;
+        }
+
        public  void addCourse(Course course)
        {
            database.insert(course);
