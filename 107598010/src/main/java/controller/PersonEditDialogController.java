@@ -123,6 +123,7 @@ public class PersonEditDialogController {
             else {
                 courseServices.addCourse(course);
                 dialogStage.close();
+                
             }
         }
         else
