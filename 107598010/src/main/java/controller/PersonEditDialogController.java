@@ -1,33 +1,21 @@
 package controller;
 
 import entity.Course;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import services.CourseServices;
 
-import java.awt.*;
 import java.util.regex.Pattern;
-
-
-/**
- * Dialog to edit details of a person.
- *
- * @author Marco Jakob
- */
 public class PersonEditDialogController {
 
     @FXML
     private TextField courseName;
     @FXML
     private TextField courseDescription;
-
     @FXML
     private TextField courseTarget;
     @FXML
@@ -36,12 +24,11 @@ public class PersonEditDialogController {
     private TextField courseAttentionNote;
     @FXML
     private TextField courseNote;
-
-
     private Stage dialogStage;
     private Course course;
     private boolean okClicked = false;
     private CourseServices courseServices = new CourseServices();
+    private String selectButton;
 
     /**
      * Initializes the controller class. This method is automatically called
@@ -59,38 +46,39 @@ public class PersonEditDialogController {
             public void handle(KeyEvent event) {
                 System.out.println(coursePrice.getText());
                 if (!isNumeric(coursePrice.getText())) {
-                    final Alert alert2 = new Alert(Alert.AlertType.INFORMATION); // 實體化Alert對話框物件，並直接在建構子設定對話框的訊息類型
-                    alert2.setTitle("輸入錯誤"); //設定對話框視窗的標題列文字
-                    alert2.setHeaderText("請輸入數字"); //設定對話框視窗裡的標頭文字。若設為空字串，則表示無標頭
-                    alert2.setContentText("請按下「確定」按鈕。並重新填寫"); //設定對話框的訊息文字
-                    alert2.showAndWait();
+                    setAlert("請輸入數字", "重新輸入");
+                    coursePrice.clear();
                 }
             }
-
         });
     }
 
-    /**
-     * Sets the stage of this dialog.
-     *
-     * @param dialogStage
-     */
+    private void setAlert(String title, String header) {
+        final Alert alert2 = new Alert(Alert.AlertType.INFORMATION); // 實體化Alert對話框物件，並直接在建構子設定對話框的訊息類型
+        alert2.setTitle(title); //設定對話框視窗的標題列文字
+        alert2.setHeaderText(header); //設定對話框視窗裡的標頭文字。若設為空字串，則表示無標頭
+        alert2.setContentText("請按下「確定」按鈕。並重新填寫"); //設定對話框的訊息文字
+        alert2.showAndWait();
+    }
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
 
     public void setPerson(String courseName) {
-
         this.courseName.setText(courseName);
         Course courseTemp = courseServices.selectCourse(courseName);
         if (courseTemp != null) {
+            selectButton = "Update";
             this.courseName.setDisable(true);
             courseDescription.setText(courseTemp.getCourseDescription());
             courseTarget.setText(courseTemp.getCourseTarget());
             coursePrice.setText(Integer.toString(courseTemp.getCoursePrice()));
             courseAttentionNote.setText(courseTemp.getCourseAttentionNote());
             courseNote.setText(courseTemp.getCourseNote());
+        } else {
+            selectButton = "Add";
         }
 
     }
@@ -107,25 +95,44 @@ public class PersonEditDialogController {
     /**
      * Called when the user clicks ok.
      */
-    @FXML
-    private void handleOk() {
-        course = new Course();
-
-        System.out.println(courseName.getText());
+    private void setText()
+    {
         course.setCourseName(courseName.getText());
         course.setCourseDescription(courseDescription.getText());
         course.setCourseTarget(courseTarget.getText());
+        if(coursePrice.getText().equals("")) {
+            coursePrice.setText("0");
+        }
         course.setCoursePrice(Integer.parseInt(coursePrice.getText().toString()));
         course.setCourseAttentionNote(courseAttentionNote.getText());
         course.setCourseNote(courseNote.getText());
-        okClicked = true;
-        if (courseServices.selectCourse(courseName.getText()) != null) {
-            courseServices.updateCourse(course);
-        } else {
-            courseServices.addCourse(course);
+    }
+    @FXML
+    private void handleOk() {
+        course = new Course();
+        setText();
+        if(selectButton.equals("Add"))
+        {
+            if (courseName.getText().equals(" ")) {
+                setAlert("課程名稱空白", "重新輸入");
+            }
+            else if (courseServices.selectCourse(courseName.getText()) != null) {
+                setAlert("重複課程名稱", "請查明後再輸入");
+                courseName.clear();
+            }
+            else {
+                courseServices.addCourse(course);
+                dialogStage.close();
+            }
         }
-        dialogStage.close();
-
+        else
+        {
+            if (courseServices.selectCourse(courseName.getText()) != null) {
+                courseServices.updateCourse(course);
+                dialogStage.close();
+            }
+        }
+        okClicked = true;
     }
 
     /**
@@ -141,46 +148,5 @@ public class PersonEditDialogController {
      *
      * @return true if the input is valid
      */
-    private boolean isInputValid() {
-        String errorMessage = "";
 
-        if (courseName.getText() == null || courseName.getText().length() == 0) {
-            errorMessage += "No valid first name!\n";
-        }
-        if (courseDescription.getText() == null || courseDescription.getText().length() == 0) {
-            errorMessage += "No valid last name!\n";
-        }
-        if (courseTarget.getText() == null || courseTarget.getText().length() == 0) {
-            errorMessage += "No valid street!\n";
-        }
-
-        if (coursePrice.getText() == null || coursePrice.getText().length() == 0) {
-            errorMessage += "No valid postal code!\n";
-        } else {
-            // try to parse the postal code into an int.
-            try {
-                Integer.parseInt(coursePrice.getText());
-            } catch (NumberFormatException e) {
-                errorMessage += "No valid postal code (must be an integer)!\n";
-            }
-        }
-
-        if (courseAttentionNote.getText() == null || courseAttentionNote.getText().length() == 0) {
-            errorMessage += "No valid city!\n";
-        }
-
-        if (courseNote.getText() == null || courseNote.getText().length() == 0) {
-            errorMessage += "No valid birthday!\n";
-        } else {
-
-        }
-
-        if (errorMessage.length() == 0) {
-            return true;
-        } else {
-            // Show the error message.
-
-            return false;
-        }
-    }
 }

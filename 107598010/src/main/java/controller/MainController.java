@@ -1,18 +1,21 @@
 package controller;
 
 import Factory.CourseFactory;
+import com.sun.javafx.scene.control.skin.TableViewSkin;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import entity.Course;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -50,6 +53,11 @@ public class MainController implements Initializable {
     private TableColumn<Course, String> courseNote;
 
     @FXML
+    private Button deleteButton ;
+
+    @FXML
+    private Button updateButton;
+    @FXML
     private void handleAddPerson() throws IOException {
         showPersonEditDialog(" ");
     }
@@ -80,11 +88,21 @@ public class MainController implements Initializable {
         courseAttentionNote.setCellValueFactory(new PropertyValueFactory<>("courseAttentionNote"));
         courseNote.setCellValueFactory(new PropertyValueFactory<>("courseNote"));
         courseTable.setItems(data);
+        deleteButton.setDisable(true);
+        updateButton.setDisable(true);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
+
+        courseTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+                    updateButton.setDisable(false);
+                    deleteButton.setDisable(false);
+
+                }
+            );
         updateUI();
     }
 
@@ -105,7 +123,6 @@ public class MainController implements Initializable {
             dialogStage.setScene(scene);
 
             // Set the person into the controller.
-
             controller.setDialogStage(dialogStage);
             controller.setPerson(ctemp);
             // Show the dialog and wait until the user closes it
