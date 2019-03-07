@@ -40,9 +40,9 @@
                         <TableColumn fx:id="courseNote" prefWidth="136.0" text="備註" />
                     </columns>
                   </TableView>
-                  <Button fx:id="deleteButton" cancelButton="true" layoutX="604.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleDeletePerson" text="刪除" />
-                  <Button layoutX="485.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleAddPerson" text="新增" />
-                  <Button fx:id="updateButton" cancelButton="true" layoutX="546.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleUpdatePerson" text="更新" />
+                  <Button fx:id="deleteButton" cancelButton="true" layoutX="604.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleDeleteCourse" text="刪除" />
+                  <Button layoutX="485.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleAddCourse" text="新增" />
+                  <Button fx:id="updateButton" cancelButton="true" layoutX="546.0" layoutY="234.0" mnemonicParsing="false" onAction="#handleUpdateCourse" text="更新" />
                </children>
             </AnchorPane>
          </children>

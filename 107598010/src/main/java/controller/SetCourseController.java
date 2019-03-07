@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import services.CourseServices;
 
 import java.util.regex.Pattern;
-public class PersonEditDialogController {
+
+public class SetCourseController {
 
     @FXML
     private TextField courseName;
@@ -30,10 +31,8 @@ public class PersonEditDialogController {
     private CourseServices courseServices = new CourseServices();
     private String selectButton;
 
-    /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded.
-     */
+
+    //judge input is a Number
     public static boolean isNumeric(String str) {
         Pattern pattern = Pattern.compile("[0-9]*");
         return pattern.matcher(str).matches();
@@ -53,11 +52,12 @@ public class PersonEditDialogController {
         });
     }
 
+    //create Alert Dialog
     private void setAlert(String title, String header) {
-        final Alert alert2 = new Alert(Alert.AlertType.INFORMATION); // 實體化Alert對話框物件，並直接在建構子設定對話框的訊息類型
-        alert2.setTitle(title); //設定對話框視窗的標題列文字
-        alert2.setHeaderText(header); //設定對話框視窗裡的標頭文字。若設為空字串，則表示無標頭
-        alert2.setContentText("請按下「確定」按鈕。並重新填寫"); //設定對話框的訊息文字
+        final Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+        alert2.setTitle(title);
+        alert2.setHeaderText(header);
+        alert2.setContentText("請按下「確定」按鈕。並重新填寫");
         alert2.showAndWait();
     }
 
@@ -65,7 +65,7 @@ public class PersonEditDialogController {
         this.dialogStage = dialogStage;
     }
 
-
+    //set text to list
     public void setPerson(String courseName) {
         this.courseName.setText(courseName);
         Course courseTemp = courseServices.selectCourse(courseName);
@@ -80,74 +80,51 @@ public class PersonEditDialogController {
         } else {
             selectButton = "Add";
         }
-
     }
 
-    /**
-     * Returns true if the user clicked OK, false otherwise.
-     *
-     * @return
-     */
     public boolean isOkClicked() {
         return okClicked;
     }
 
-    /**
-     * Called when the user clicks ok.
-     */
-    private void setText()
-    {
+
+    private void setText() {
         course.setCourseName(courseName.getText());
         course.setCourseDescription(courseDescription.getText());
         course.setCourseTarget(courseTarget.getText());
-        if(coursePrice.getText().equals("")) {
+        if (coursePrice.getText().equals("")) {
             coursePrice.setText("0");
         }
         course.setCoursePrice(Integer.parseInt(coursePrice.getText().toString()));
         course.setCourseAttentionNote(courseAttentionNote.getText());
         course.setCourseNote(courseNote.getText());
     }
+
     @FXML
     private void handleOk() {
         course = new Course();
         setText();
-        if(selectButton.equals("Add"))
-        {
+        if (selectButton.equals("Add")) {
             if (courseName.getText().equals(" ")) {
                 setAlert("課程名稱空白", "重新輸入");
-            }
-            else if (courseServices.selectCourse(courseName.getText()) != null) {
+            } else if (courseServices.selectCourse(courseName.getText()) != null) {
                 setAlert("重複課程名稱", "請查明後再輸入");
                 courseName.clear();
-            }
-            else {
+            } else {
                 courseServices.addCourse(course);
                 dialogStage.close();
-                
             }
-        }
-        else
-        {
-            if (courseServices.selectCourse(courseName.getText()) != null) {
-                courseServices.updateCourse(course);
-                dialogStage.close();
-            }
+        } else if (courseServices.selectCourse(courseName.getText()) != null) {
+            courseServices.updateCourse(course);
+            dialogStage.close();
         }
         okClicked = true;
     }
 
-    /**
-     * Called when the user clicks cancel.
-     */
+    /// Cancel
     @FXML
     private void handleCancel() {
         dialogStage.close();
     }
 
-    /**
-     * Validates the user input in the text fields.
-     *
-     * @return true if the input is valid
-     */
 
 }

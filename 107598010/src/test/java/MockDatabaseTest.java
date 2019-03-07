@@ -11,6 +11,4 @@ public class MockDatabaseTest extends SqlLiteDatabaseTest {
         sql = new MockDatabase();
         createTestCourse();
     }
-
-
 }

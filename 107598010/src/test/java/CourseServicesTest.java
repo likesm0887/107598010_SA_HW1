@@ -28,8 +28,8 @@ public class CourseServicesTest {
     }
 
     @Test
-    public void addCourseTest() {
-
+    public void addCourseTest()
+    {
         cs.addCourse(course);
         database.insert(course);
         Assert.assertEquals("SA", database.select((course.getCourseName())).getCourseName());

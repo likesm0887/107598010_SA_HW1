@@ -1,17 +1,11 @@
 package controller;
 
-import Factory.CourseFactory;
-import com.sun.javafx.scene.control.skin.TableViewSkin;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import entity.Course;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
@@ -21,20 +15,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import services.CourseServices;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-/**
- * Created by tanzhenyu on 2017/6/14.
- */
 public class MainController implements Initializable {
-    private CourseFactory cf = new CourseFactory();
-    private CheckBox select;
     private CourseServices courseServices = new CourseServices();
-
     private ObservableList<Course> data
             = FXCollections.observableArrayList(courseServices.allCourse());
     @FXML
@@ -51,35 +37,36 @@ public class MainController implements Initializable {
     private TableColumn<Course, String> courseAttentionNote;
     @FXML
     private TableColumn<Course, String> courseNote;
-
     @FXML
     private Button deleteButton ;
-
     @FXML
     private Button updateButton;
-    @FXML
-    private void handleAddPerson() throws IOException {
-        showPersonEditDialog(" ");
-    }
 
     @FXML
-    private void handleUpdatePerson() throws IOException {
+    private void handleAddCourse() throws IOException {
+        showCourseEditDialog(" ");
+    }
+
+    //Update Course information
+    @FXML
+    private void handleUpdateCourse() throws IOException {
         int selectedIndex = courseTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex != -1)
-            showPersonEditDialog(courseTable.getItems().get(selectedIndex).getCourseName());
+            showCourseEditDialog(courseTable.getItems().get(selectedIndex).getCourseName());
     }
 
+    //Delete Course
     @FXML
-    private void handleDeletePerson() {
+    private void handleDeleteCourse() {
         int selectedIndex = courseTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex != -1) {
             courseServices.deleteCourse(courseTable.getItems().get(selectedIndex).getCourseName());
             courseTable.getItems().remove(selectedIndex);
         }
-
     }
 
-    public void updateUI() {
+
+    private void updateUI() {
         data = FXCollections.observableArrayList(courseServices.allCourse());
         courseName.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         courseDescription.setCellValueFactory(new PropertyValueFactory<>("courseDescription"));
@@ -95,37 +82,30 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
-
+        //listener selection if selected then updateButton and deleteButton are enable
         courseTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                     updateButton.setDisable(false);
                     deleteButton.setDisable(false);
-
                 }
             );
         updateUI();
     }
 
+    //create Edit Dialog
     @FXML
-    public boolean showPersonEditDialog(String ctemp) throws IOException {
+    public boolean showCourseEditDialog(String ctemp) throws IOException {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("PersonEditDialog.fxml"));
-            // FileInputStream fileInputStream = new FileInputStream("controller/");
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("SetCourseDialog.fxml"));
             Parent root = (Parent) loader.load();
-            PersonEditDialogController controller = loader.getController();
-            // Create the dialog Stage.
+            SetCourseController controller = loader.getController();
             Stage dialogStage = new Stage();
             Scene scene = new Scene(root);
-            dialogStage.setTitle("Edit Person");
+            dialogStage.setTitle("Edit Course");
             dialogStage.setScene(scene);
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.setScene(scene);
-
-            // Set the person into the controller.
             controller.setDialogStage(dialogStage);
             controller.setPerson(ctemp);
-            // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
             updateUI();
             return controller.isOkClicked();

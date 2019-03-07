@@ -39,8 +39,6 @@ public class SqlLiteDatabase extends DatabaseAccess {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 
 
@@ -60,10 +58,8 @@ public class SqlLiteDatabase extends DatabaseAccess {
             pst.setString(idx++, course.getCourseNote());
             pst.executeUpdate();
         } catch (SQLException e) {
-             System.out.println("Primary Key 重複");
+            System.out.println("Primary Key 重複");
         }
-
-
     }
 
     @Override
@@ -77,7 +73,7 @@ public class SqlLiteDatabase extends DatabaseAccess {
             stat = sqlDatabase.createStatement();
             rs = stat.executeQuery(sql);
             while (rs.next()) {
-                System.out.println(rs.getString("courseName")+"\t"+rs.getString("courseDescription") + "\t" + rs.getString("courseTarget") + "\t" + rs.getInt("coursePrice") + "\t" + rs.getString("courseAttentionNote") + "\t" + rs.getString("courseNote"));
+                System.out.println(rs.getString("courseName") + "\t" + rs.getString("courseDescription") + "\t" + rs.getString("courseTarget") + "\t" + rs.getInt("coursePrice") + "\t" + rs.getString("courseAttentionNote") + "\t" + rs.getString("courseNote"));
                 courseList.add(courseFactory.createCourseObject(rs.getString("courseName")
                         , rs.getString("courseDescription")
                         , rs.getString("courseTarget")
@@ -89,7 +85,6 @@ public class SqlLiteDatabase extends DatabaseAccess {
             e.printStackTrace();
         }
         return courseList;
-
     }
 
     @Override
@@ -98,7 +93,6 @@ public class SqlLiteDatabase extends DatabaseAccess {
         if (select(courseName) == null) {
             throw new NullPointerException();
         }
-
         PreparedStatement pst = null;
         try {
             pst = sqlDatabase.prepareStatement(sql);
@@ -108,7 +102,6 @@ public class SqlLiteDatabase extends DatabaseAccess {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -128,7 +121,6 @@ public class SqlLiteDatabase extends DatabaseAccess {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -150,7 +142,6 @@ public class SqlLiteDatabase extends DatabaseAccess {
                         , rs.getInt("coursePrice")
                         , rs.getString("courseAttentionNote")
                         , rs.getString("courseNote"));
-
             }
         } catch (SQLException e) {
             e.printStackTrace();

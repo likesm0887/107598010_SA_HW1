@@ -9,7 +9,6 @@ import java.io.UnsupportedEncodingException;
 import java.sql.*;
 import java.io.FileNotFoundException;
 
-import static org.junit.Assert.assertTrue;
 
 public class SqlLiteDatabaseTest {
     protected Course course = new Course();

@@ -3,12 +3,12 @@ package entity;
 public class Course {
 
 
-    String courseName;
-    String courseDescription;
-    String courseTarget;
-    int coursePrice;
-    String courseAttentionNote;
-    String courseNote;
+    private String courseName;
+    private String courseDescription;
+    private String courseTarget;
+    private int coursePrice;
+    private String courseAttentionNote;
+    private String courseNote;
 
     public Course() {
 
@@ -20,7 +20,7 @@ public class Course {
     }
 
     public String getCourseName() {
-        return this.courseName = courseName;
+        return courseName;
     }
 
 
@@ -29,7 +29,7 @@ public class Course {
     }
 
     public String getCourseDescription() {
-        return this.courseDescription = courseDescription;
+        return this.courseDescription;
     }
 
 
@@ -38,7 +38,7 @@ public class Course {
     }
 
     public String getCourseTarget() {
-        return this.courseTarget = courseTarget;
+        return this.courseTarget;
     }
 
 
@@ -47,7 +47,7 @@ public class Course {
     }
 
     public String getCourseAttentionNote() {
-        return this.courseAttentionNote = courseAttentionNote;
+        return this.courseAttentionNote;
     }
 
 
