@@ -11,16 +11,18 @@ import java.io.FileNotFoundException;
 
 
 public class SqlLiteDatabaseTest {
-    protected Course course = new Course();
+    protected Course course ;
     Database sql;
 
     public void createTestCourse() {
-        course.setCourseDescription("很棒");
-        course.setCourseAttentionNote("要修過ooad");
-        course.setCourseNote("加油");
-        course.setCourseTarget("學生");
-        course.setCoursePrice(100);
-        course.setCourseName("SA");
+        course= new Course( "SA",
+                "很難喔",
+                "學生",
+                100,
+                "無",
+                "要修過ooad"
+               );
+
     }
 
     @Before
@@ -73,13 +75,13 @@ public class SqlLiteDatabaseTest {
 
         sql.connectDB();
         sql.read();
-        course = new Course();
-        course.setCourseDescription("tes");
-        course.setCourseAttentionNote("tet");
-        course.setCourseNote("tet");
-        course.setCourseTarget("teacher");
-        course.setCoursePrice(10);
-        course.setCourseName("sa");
+        course= new Course( "SA",
+                "很難喔",
+                "學生",
+                100,
+                "無",
+                "要修過ooad"
+        );
         sql.update(course);
         sql.read();
     }

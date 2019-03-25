@@ -3,7 +3,6 @@ import entity.Course;
 import org.junit.Before;
 
 public class MockDatabaseTest extends SqlLiteDatabaseTest {
-    Course course;
 
     @Before
     @Override

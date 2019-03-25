@@ -10,10 +10,15 @@ public class Course {
     private String courseAttentionNote;
     private String courseNote;
 
-    public Course() {
-
+    public Course(String courseName, String courseDescription, String courseTarget, int coursePrice, String courseAttentionNote, String courseNote) {
+        this.courseName = courseName;
+        this.courseDescription = courseDescription;
+        this.courseTarget = courseTarget;
+        this.coursePrice = coursePrice;
+        this.courseAttentionNote = courseAttentionNote;
+        this.courseNote = courseNote;
     }
-
+    public  Course(){};
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;

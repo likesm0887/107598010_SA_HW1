@@ -10,13 +10,7 @@ public class CourseFactory {
                                      int coursePrice,
                                      String courseAttentionNote,
                                      String courseNote) {
-        Course course = new Course();
-        course.setCourseName(courseName);
-        course.setCourseDescription(courseDescription);
-        course.setCourseTarget(courseTarget);
-        course.setCoursePrice(coursePrice);
-        course.setCourseAttentionNote(courseAttentionNote);
-        course.setCourseNote(courseNote);
+        Course course = new Course(courseName,courseDescription,courseTarget,coursePrice,courseAttentionNote,courseNote);
         return course;
     }
 

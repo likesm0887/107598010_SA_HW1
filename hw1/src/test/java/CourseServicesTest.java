@@ -18,7 +18,7 @@ public class CourseServicesTest {
         cs.setDatabase(database);
     }
 
-    public void createTestCourse() {
+    private void createTestCourse() {
         course.setCourseDescription("很棒");
         course.setCourseAttentionNote("for services");
         course.setCourseNote("加油");
