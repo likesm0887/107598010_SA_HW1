@@ -65,7 +65,6 @@ public class MainController implements Initializable {
         }
     }
 
-
     private void updateUI() {
         data = FXCollections.observableArrayList(courseServices.allCourse());
         courseName.setCellValueFactory(new PropertyValueFactory<>("courseName"));
@@ -97,7 +96,7 @@ public class MainController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("SetCourseDialog.fxml"));
             Parent root = (Parent) loader.load();
-            SetCourseController controller = loader.getController();
+            CourseEditorController controller = loader.getController();
             Stage dialogStage = new Stage();
             Scene scene = new Scene(root);
             dialogStage.setTitle("Edit Course");

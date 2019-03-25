@@ -1,6 +1,6 @@
 
 import databaseSystem.Database;
-import databaseSystem.SqlLiteDatabase;
+import databaseSystem.SqliteDatabase;
 import entity.Course;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class SqlLiteDatabaseTest {
 
     @Before
     public void setup() {
-        sql = new SqlLiteDatabase();
+        sql = new SqliteDatabase();
         createTestCourse();
     }
 

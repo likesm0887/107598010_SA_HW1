@@ -11,7 +11,7 @@ import services.CourseServices;
 
 import java.util.regex.Pattern;
 
-public class SetCourseController {
+public class CourseEditorController {
 
     @FXML
     private TextField courseName;

@@ -1,12 +1,13 @@
 package databaseSystem;
 
 import entity.Course;
+import factory.CourseFactory;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
 public abstract class DatabaseAccess implements Database {
-
+    protected CourseFactory courseFactory = new CourseFactory();
     @Override
     public void connectDB() {
 

@@ -1,6 +1,6 @@
 package databaseSystem;
 
-import Factory.CourseFactory;
+import factory.CourseFactory;
 import entity.Course;
 import org.sqlite.SQLiteConfig;
 import org.sqlite.SQLiteDataSource;
@@ -9,10 +9,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SqlLiteDatabase extends DatabaseAccess {
+public class SqliteDatabase extends DatabaseAccess {
 
     private Connection sqlDatabase;
-    private CourseFactory courseFactory = new CourseFactory();
+
 
     @Override
     public void connectDB() {

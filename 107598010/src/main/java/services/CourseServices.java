@@ -1,14 +1,13 @@
 package services;
 
 import databaseSystem.Database;
-import databaseSystem.DatabaseAccess;
-import databaseSystem.SqlLiteDatabase;
+import databaseSystem.SqliteDatabase;
 import entity.Course;
 
 import java.util.List;
 
 public class CourseServices {
-    private Database database = new SqlLiteDatabase();
+    private Database database = new SqliteDatabase();
 
     public void setDatabase(Database database) {
         this.database = database;

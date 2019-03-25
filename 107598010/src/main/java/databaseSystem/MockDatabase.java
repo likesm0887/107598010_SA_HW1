@@ -1,6 +1,6 @@
 package databaseSystem;
 
-import Factory.CourseFactory;
+import factory.CourseFactory;
 import entity.Course;
 
 import java.sql.Connection;
@@ -10,7 +10,7 @@ import java.util.List;
 public class MockDatabase extends DatabaseAccess {
     private Connection sqlDatabase;
     List<Course> mockCourseDatabase = new ArrayList<>();
-    private CourseFactory courseFactory = new CourseFactory();
+
 
     @Override
     public void connectDB() {
